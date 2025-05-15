@@ -2,7 +2,6 @@ import Home from "./pages/Home";
 
 export const initialStore=()=>{
   return{
-    ContactDetail:[],
     contacts: []
   }
 }
@@ -11,42 +10,36 @@ export default function storeReducer(store, action = {}) {
   switch(action.type){
     case 'set_contacts':
 
-      const { ContactDetail } = action.payload
-
+     case 'set_contacts':
       return {
         ...store,
-       ContactDetail: {
-          ...store.ContactDetail,
-          ...ContactDetail
-        } 
+        contacts: action.payload 
       };
 
     case 'add_contact':
-      const contact = action.payload
-
       return {
         ...store,
-        contacts: [...store.contacts, contact]
+        contacts: [...store.contacts, action.payload]
       };
 
     case 'delete_contact':
-      const id = action.payload
-
-      return {
+       return {
         ...store,
-        contacts: store.contacts.filter(contact => contact.id !== id)
+        contacts: store.contacts.filter(contact => contact.id !== action.payload)
       };
-    case 'update_contact':
-      const { id: contactId, ...updatedContact } = action.payload
 
+    case 'update_contact':
       return {
         ...store,
         contacts: store.contacts.map(contact => 
-          contact.id === contactId ? { ...contact, ...updatedContact } : contact
+          contact.id === action.payload.id 
+            ? { ...contact, ...action.payload } 
+            : contact
         )
       };
 
     default:
-      throw Error('Unknown action.');
+      return store;
   }    
 }
+
