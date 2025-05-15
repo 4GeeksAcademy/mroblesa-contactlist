@@ -52,7 +52,6 @@ export const Home = () => {
 			console.error('Error fetching contacts:', error);
 		}
 	};
-	createNewContact();
 	//DELETE CONTACT
 	const deleteContact = async (id) => {
 		try {
@@ -70,10 +69,6 @@ export const Home = () => {
 	};
 	//UPDATE CONTACT
 	const updateContact = async (id, updatedData) => {
-		const newData = prompt('Ingrese nuevos datos en formato JSON\nEjemplo: {"name":"Nuevo nombre","email":"nuevo@email.com"}',
-			JSON.stringify(currentData, null, 2));
-
-		if (newData) {
 			try {
 				const updateContact = await fetch(`https://playground.4geeks.com/contact/agendas/alejajaja/contacts/${id}`, {
 					method: 'PUT',
@@ -90,7 +85,7 @@ export const Home = () => {
 			} catch (error) {
 				console.error('Error fetching contacts:', error);
 			}
-		};
+		
 	}
 
 
@@ -106,19 +101,19 @@ export const Home = () => {
 									<div className="card-body">
 										<h5 className="card-title">{contact.name}</h5>
 										<ul className="list-unstyled">
-											<li>📧 {contact.email}</li>
-											<li>📱 {contact.phone}</li>
-											<li>🏠 {contact.address}</li>
+											<li> {contact.email}</li>
+											<li> {contact.phone}</li>
+											<li> {contact.address}</li>
 										</ul>
 									</div>
 									<div className="card-footer">
 										<button
-											onClick={() => handleUpdate(contact.id, contact)}
+											onClick={() => updateContact(contact.id, contact)}
 											className="btn btn-sm btn-warning me-2">
 											Edit
 										</button>
 										<button
-											onClick={() => handleDelete(contact.id)}
+											onClick={() => deleteContact(contact.id)}
 											className="btn btn-sm btn-danger">
 											Delete
 										</button>
